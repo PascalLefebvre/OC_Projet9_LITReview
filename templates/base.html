@@ -1,0 +1,26 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>LITReview</title>
+        <link rel="stylesheet" href="{% static 'bookreview/style.css' %}" />
+    </head>
+    <body>
+        <header>
+            <h1>LITReview</h1>
+        {% if user.is_authenticated %}
+            <nav>
+                <ul>
+                    <li><a href="">Flux</a></li>
+                    <li><a href="">Posts</a></li>
+                    <li><a href="">Abonnements</a></li>
+                    <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+                </ul>
+            </nav>
+        {% endif %}
+        </header> 
+        <div id="page_block">
+        {% block content %}{% endblock content %}
+        </div>
+    </body>
+</html>

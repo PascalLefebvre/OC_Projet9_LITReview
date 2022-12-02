@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "bookreview",
     "authentication",
 ]
@@ -56,7 +57,9 @@ ROOT_URLCONF = "litreview.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            BASE_DIR.joinpath('templates'),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -121,3 +124,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Specific setup
 
 AUTH_USER_MODEL = "authentication.User"
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
