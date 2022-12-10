@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # My apps
+    "bookreview",
+    "accounts",
+    # Default Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,8 +42,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "bookreview",
-    "authentication",
 ]
 
 MIDDLEWARE = [
@@ -121,9 +123,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Specific setup
+# My settings
 
-AUTH_USER_MODEL = "authentication.User"
-LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'login'
-LOGOUT_REDIRECT_URL = 'login'
+AUTH_USER_MODEL = "accounts.User"
+
+LOGIN_REDIRECT_URL = 'bookreview:home'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+LOGIN_URL = 'accounts:login'

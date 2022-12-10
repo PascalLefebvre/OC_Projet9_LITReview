@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Bienvenue {{ user.username }}</h1>
+
+  <h1>Bienvenue {{ user.username }}</h1>
+
+  <a href="{% url 'bookreview:new_ticket' %}">Demander une critique</a>
+
+  {% for post in posts %}
+    {% csrf_token %}
+    {% if post.content_type == 'TICKET' %}
+      {% comment %} {% include 'ticket_snippet.html' %} {% endcomment %}
+      <hr />
+      <p>Ticket du {{ post.time_created }} par {{ post.user.username }}</p>
+      <p>{{ post.title }}</p>
+      <a href="{% url 'bookreview:new_review' post.id %}">Créer une critique</a>
+    {% elif post.content_type == 'REVIEW' %}
+      {% comment %} {% include 'review_snippet.html' %} {% endcomment %}
+      <hr />
+      <p>Critique du {{ post.time_created }} par {{ post.user.username }}</p>
+      <p>{{ post.headline }} - {{ post.rating }} / 5</p>
+      <a href="{% url 'bookreview:edit_review' post.id %}">Modifier la critique</a>
+      <p>en réponse à {{ post.ticket.title }} de {{ post.user.username }}</p>
+    {% endif %}
+  {% endfor %}
+  
 {% endblock content %}

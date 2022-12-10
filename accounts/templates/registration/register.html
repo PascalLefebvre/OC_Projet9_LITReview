@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
+
 {% block content %}
+
     <h2>Inscrivez-vous</h2>
     {% if form.errors %}
         {{ form.errors }}
     {% endif %}
-    <form method="post">
-        {{ form.as_p }}
+
+    <form action="{% url 'accounts:register' %}" method="post">
         {% csrf_token %}
+        {{ form.as_div }}
         <button type="submit" >S'inscrire</button>
     </form>
-    <form action="{% url 'login' %}">
+
+    <form action="{% url 'accounts:login' %}">
         <input type="submit" value="Retourner">
     </form>
+
 {% endblock content %}

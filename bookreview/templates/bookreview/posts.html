@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1>Posts</h1>
+
+  <form action="{% url 'bookreview:home' %}">
+    {% csrf_token %}
+    <button type='submit'>Annuler</button>
+  </form>
+  
+{% endblock content %}
