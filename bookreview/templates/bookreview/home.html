@@ -20,9 +20,6 @@
       <hr />
       <p>Critique du {{ post.time_created }} par {{ post.user.username }}</p>
       <p>{{ post.headline }} - {{ post.rating }} / 5</p>
-      {% if post.user == user %}
-        <a href="{% url 'bookreview:edit_review' post.id %}">Modifier la critique</a>
-      {% endif %}
       <p>en réponse à : "{{ post.ticket.title }}" de "{{ post.ticket.user.username }}"</p>
     {% endif %}
   {% endfor %}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Modifier votre critique</h1>
+  <h1>Modifier votre ticket</h1>
 
-  <form action="{% url 'bookreview:edit_review' review.id %}" method='post'>
+  <form action="{% url 'bookreview:edit_ticket' ticket.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_div }}
     <button type='submit'>Enregistrer</button>

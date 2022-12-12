@@ -32,6 +32,7 @@ def home(request):
     posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
     return render(request, 'bookreview/home.html', context={'posts': posts})
 
+
 @login_required
 # @permission_required('bookreview.add_ticket', raise_exception=True)
 def new_ticket(request):
@@ -47,6 +48,43 @@ def new_ticket(request):
             return redirect('bookreview:home')
     context = {'form': form}
     return render(request, 'bookreview/new_ticket.html', context)
+
+
+@login_required
+def edit_ticket(request, ticket_id):
+    """Edit a ticket."""
+    ticket = Ticket.objects.get(id=ticket_id)
+
+    if ticket.user != request.user:
+        raise Http404
+
+    if request.method != 'POST':
+        form = TicketForm(instance=ticket)
+    else:
+        form = TicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('bookreview:posts')
+
+    context = {'ticket': ticket, 'form': form}
+    return render(request, 'bookreview/edit_ticket.html', context)
+
+
+@login_required
+def delete_ticket(request, ticket_id):
+    """Delete a ticket."""
+    ticket = Ticket.objects.get(id=ticket_id)
+
+    if ticket.user != request.user:
+        raise Http404
+
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('bookreview:posts')
+
+    context = {'ticket': ticket}
+    return render(request, 'bookreview/delete_ticket.html', context)
+
 
 @login_required
 def new_review(request, ticket_id):
@@ -67,9 +105,10 @@ def new_review(request, ticket_id):
     context = {'ticket': ticket, 'form': form}
     return render(request, 'bookreview/new_review.html', context)
 
+
 @login_required
 def edit_review(request, review_id):
-    """Edit a new review."""
+    """Edit a review."""
     review = Review.objects.get(id=review_id)
 
     if review.user != request.user:
@@ -81,11 +120,38 @@ def edit_review(request, review_id):
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
-            return redirect('bookreview:home')
+            return redirect('bookreview:posts')
 
     context = {'review': review, 'form': form}
     return render(request, 'bookreview/edit_review.html', context)
 
+
+@login_required
+def delete_review(request, review_id):
+    """Delete a ticket."""
+    review = Review.objects.get(id=review_id)
+
+    if review.user != request.user:
+        raise Http404
+
+    if request.method == 'POST':
+        review.delete()
+        return redirect('bookreview:posts')
+
+    context = {'review': review}
+    return render(request, 'bookreview/delete_review.html', context)
+
+
 @login_required
 def posts(request):
-    return render(request, 'bookreview/posts.html')
+    """The user posts page."""
+    # A queryset of viewable tickets
+    tickets = Ticket.objects.filter(user=request.user)
+    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+    # A queryset of viewable reviews
+    reviews = Review.objects.filter(user=request.user)
+    reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+    # combine and sort the two types of posts
+    posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
+    return render(request, 'bookreview/posts.html', context={'posts': posts})

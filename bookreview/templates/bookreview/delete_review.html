@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Supprimer la critique</h1>
+
+  <p>Etes-vous sûr de vouloir supprimer la critique : {{ review.headline }} ?</p>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <button type='submit'>Oui</button>
+  </form>
+
+  <form action="{% url 'bookreview:posts' %}">
+    {% csrf_token %}
+    <button type='submit'>Non</button>
+  </form>
+
+{% endblock content %}
