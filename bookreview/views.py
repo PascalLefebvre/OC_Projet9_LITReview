@@ -107,6 +107,30 @@ def new_review(request, ticket_id):
 
 
 @login_required
+def new_review_one_step(request):
+    """ Add a new review that is NOT in response to a ticket.
+        Create the ticket and the review at the same time."""
+    if request.method != 'POST':
+        ticket_form = TicketForm()
+        review_form = ReviewForm()
+    else:
+        ticket_form = TicketForm(request.POST)
+        review_form = ReviewForm(request.POST)
+        if ticket_form.is_valid() and review_form.is_valid():
+            new_ticket = ticket_form.save(commit=False)
+            new_ticket.user = request.user
+            new_ticket.save()
+            new_review = review_form.save(commit=False)
+            new_review.ticket = new_ticket
+            new_review.user = request.user
+            new_review.save()
+            return redirect('bookreview:home') 
+
+    context = {'ticket_form': ticket_form, 'review_form': review_form}
+    return render(request, 'bookreview/new_review_one_step.html', context)
+
+
+@login_required
 def edit_review(request, review_id):
     """Edit a review."""
     review = Review.objects.get(id=review_id)

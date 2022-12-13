@@ -5,6 +5,7 @@
   <h1>Bienvenue {{ user.username }}</h1>
 
   <a href="{% url 'bookreview:new_ticket' %}">Demander une critique</a>
+  <a href="{% url 'bookreview:new_review_one_step' %}">Créer une critique</a>
 
   {% for post in posts %}
     {% if post.content_type == 'TICKET' %}
