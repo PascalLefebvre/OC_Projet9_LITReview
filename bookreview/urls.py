@@ -8,9 +8,11 @@ app_name = "bookreview"
 
 urlpatterns = [
     # Home page.
-    path("home/", views.home, name="home"),
+    path("", views.home, name="home"),
     # Page for viewing the user posts.
     path("posts/", views.posts, name="posts"),
+    # Page for viewing the user subscriptions.
+    path("subscriptions/", views.subscriptions, name="subscriptions"),
     # Page for adding a new ticket.
     path("new_ticket/", views.new_ticket, name="new_ticket"),
     # Page for editing a ticket.

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404
+from django.db import IntegrityError
 
 
 from itertools import chain
@@ -8,7 +9,7 @@ from django.db.models import CharField, Value
 from django.db.models import Q
 
 from .models import Ticket, Review
-from .forms import TicketForm, ReviewForm
+from .forms import TicketForm, ReviewForm, UserFollowsForm
 
 
 @login_required
@@ -179,3 +180,24 @@ def posts(request):
     # combine and sort the two types of posts
     posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
     return render(request, 'bookreview/posts.html', context={'posts': posts})
+
+
+@login_required
+def subscriptions(request):
+    """The user subscriptions page."""
+    message = ''
+    if request.method != 'POST':
+        form = UserFollowsForm()
+    else:
+        form = UserFollowsForm(request.POST)
+        if form.is_valid():
+            try:
+                user_follows = form.save(commit=False)
+                user_follows.user = request.user
+                user_follows.save()
+                return redirect('bookreview:subscriptions')
+            except IntegrityError as error:
+                message = "Abonnement invalide"
+    
+    context = {'message': message, 'form': form}
+    return render(request, 'bookreview/subscriptions.html', context)

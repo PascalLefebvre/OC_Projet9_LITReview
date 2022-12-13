@@ -13,7 +13,7 @@
           <ul>
             <li><a href="{% url 'bookreview:home' %}">Flux</a></li>
             <li><a href="{% url 'bookreview:posts' %}">Posts</a></li>
-            <li><a href="">Abonnements</a></li>
+            <li><a href="{% url 'bookreview:subscriptions' %}">Abonnements</a></li>
             <li>
               <form action="{% url 'accounts:logout' %}" method="post">
                 {% csrf_token %}
