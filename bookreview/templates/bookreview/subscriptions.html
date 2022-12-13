@@ -3,17 +3,25 @@
 {% block content %}
 
   <h1>Suivre d'autres utilisateurs</h1>
-
   <h2>{{ message }}</h2>
-
   <form href="{% url 'bookreview:subscriptions' %}" method="post">
     {% csrf_token %}
-    {{ form.as_div }}
+    {{ subscription_form.as_div }}
     <button type="submit">Envoyer</button>
   </form>
 
   <h1>Abonnements</h1>
+  {% for followed_user in followed_users %}
+    <form action="{% url 'bookreview:unsubscribe_user' followed_user.id %}" method="post">
+      {% csrf_token %}
+      <p>{{ followed_user }}</p>
+      <button type="submit">Désabonner</button>
+    </form>
+  {% endfor %}
 
   <h1>Abonnés</h1>
+  {% for subscriber in user_subscribers %}
+    <p>{{ subscriber }}</p>
+  {% endfor %}
 
 {% endblock content %}

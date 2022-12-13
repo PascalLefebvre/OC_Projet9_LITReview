@@ -8,8 +8,16 @@ from itertools import chain
 from django.db.models import CharField, Value
 from django.db.models import Q
 
-from .models import Ticket, Review
+from .models import Ticket, Review, UserFollows
 from .forms import TicketForm, ReviewForm, UserFollowsForm
+
+def get_followed_users(user):
+    """ Get the users that the user follows. """
+    followed_users = []
+    user_follows_rows = user.following.all()
+    for row in user_follows_rows:
+        followed_users.append(row.followed_user)
+    return followed_users
 
 
 @login_required
@@ -17,10 +25,7 @@ from .forms import TicketForm, ReviewForm, UserFollowsForm
 def home(request):
     """The home page for bookreview."""
     # Get the users that the user follows.
-    followed_users = []
-    users_follows = request.user.following.all()
-    for user_follow in users_follows:
-        followed_users.append(user_follow.followed_user)
+    followed_users = get_followed_users(request.user)
 
     # A queryset of viewable tickets
     tickets = Ticket.objects.filter(Q(user__in=followed_users) | Q(user=request.user))
@@ -185,19 +190,40 @@ def posts(request):
 @login_required
 def subscriptions(request):
     """The user subscriptions page."""
+    # Get the users that the user follows.
+    followed_users = get_followed_users(request.user)
+
+    # Get the logged user's subscribers.
+    user_subscribers = []
+    users_follows_rows = request.user.followed_by.all()
+    for row in users_follows_rows:
+        user_subscribers.append(row.user)
+
+    # Subscribe to a user.
     message = ''
     if request.method != 'POST':
-        form = UserFollowsForm()
+        subscription_form = UserFollowsForm()
     else:
-        form = UserFollowsForm(request.POST)
-        if form.is_valid():
+        subscription_form = UserFollowsForm(request.POST)
+        if subscription_form.is_valid():
             try:
-                user_follows = form.save(commit=False)
+                user_follows = subscription_form.save(commit=False)
                 user_follows.user = request.user
                 user_follows.save()
                 return redirect('bookreview:subscriptions')
-            except IntegrityError as error:
-                message = "Abonnement invalide"
+            except IntegrityError:
+                message = "Vous êtes déjà abonné à cet utilisateur !"
     
-    context = {'message': message, 'form': form}
+    context = {'message': message, 'subscription_form': subscription_form,
+               'followed_users': followed_users, 'user_subscribers': user_subscribers}
     return render(request, 'bookreview/subscriptions.html', context)
+
+
+@login_required
+def unsubscribe_user(request, user_id):
+    """Unsubscribe from a user."""
+    user_follows = UserFollows.objects.get(user=request.user, followed_user__id=user_id)
+    if request.method == 'POST':
+        user_follows.delete()
+        return redirect('bookreview:subscriptions')
+

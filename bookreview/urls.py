@@ -13,6 +13,8 @@ urlpatterns = [
     path("posts/", views.posts, name="posts"),
     # Page for viewing the user subscriptions.
     path("subscriptions/", views.subscriptions, name="subscriptions"),
+    # Page for unsubscribing from a user.
+    path("unsubscribe_user/<int:user_id>", views.unsubscribe_user, name="unsubscribe_user"),
     # Page for adding a new ticket.
     path("new_ticket/", views.new_ticket, name="new_ticket"),
     # Page for editing a ticket.
