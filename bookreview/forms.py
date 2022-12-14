@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Ticket, Review, UserFollows
+from .models import Ticket, Review
 
 
 class TicketForm(forms.ModelForm):
@@ -15,9 +15,5 @@ class ReviewForm(forms.ModelForm):
         fields = ['headline', 'rating', 'body']
 
 
-class UserFollowsForm(forms.ModelForm):
-
-    class Meta:
-        model = UserFollows
-        fields = [ 'followed_user', ]
-        labels = {'followed_user': ''}
+class SubscriptionsForm(forms.Form):
+    username = forms.CharField(max_length=150)

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.db import IntegrityError
 
@@ -9,7 +9,8 @@ from django.db.models import CharField, Value
 from django.db.models import Q
 
 from .models import Ticket, Review, UserFollows
-from .forms import TicketForm, ReviewForm, UserFollowsForm
+from accounts.models import User
+from .forms import TicketForm, ReviewForm, SubscriptionsForm
 
 def get_followed_users(user):
     """ Get the users that the user follows. """
@@ -21,7 +22,6 @@ def get_followed_users(user):
 
 
 @login_required
-# @permission_required('bookreview.view_ticket', raise_exception=True)
 def home(request):
     """The home page for bookreview."""
     # Get the users that the user follows.
@@ -40,7 +40,6 @@ def home(request):
 
 
 @login_required
-# @permission_required('bookreview.add_ticket', raise_exception=True)
 def new_ticket(request):
     """Add a new ticket."""
     if request.method != 'POST':
@@ -202,17 +201,23 @@ def subscriptions(request):
     # Subscribe to a user.
     message = ''
     if request.method != 'POST':
-        subscription_form = UserFollowsForm()
+        subscription_form = SubscriptionsForm()
     else:
-        subscription_form = UserFollowsForm(request.POST)
+        subscription_form = SubscriptionsForm(request.POST)
         if subscription_form.is_valid():
             try:
-                user_follows = subscription_form.save(commit=False)
-                user_follows.user = request.user
+                subscribe_username = subscription_form.cleaned_data['username']
+                subscribe_user = User.objects.get(username=subscribe_username)
+                user_follows = UserFollows(user=request.user, followed_user=subscribe_user)
                 user_follows.save()
                 return redirect('bookreview:subscriptions')
-            except IntegrityError:
-                message = "Vous êtes déjà abonné à cet utilisateur !"
+            except User.DoesNotExist:
+                message = "Cet utilisateur n'existe pas."
+            except IntegrityError as e :
+                if 'CHECK constraint' in str(e):
+                    message = "Vous ne pouvez pas vous abonner à vous-même !"
+                if 'UNIQUE constraint' in str(e):
+                    message = "Vous êtes déjà abonné à cet utilisateur !"
     
     context = {'message': message, 'subscription_form': subscription_form,
                'followed_users': followed_users, 'user_subscribers': user_subscribers}
@@ -226,4 +231,3 @@ def unsubscribe_user(request, user_id):
     if request.method == 'POST':
         user_follows.delete()
         return redirect('bookreview:subscriptions')
-

@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
+from django.db.models import CheckConstraint, F, Q
 
 
 class Ticket(models.Model):
@@ -44,6 +45,7 @@ class UserFollows(models.Model):
             "user",
             "followed_user",
         )
+        constraints = [ CheckConstraint(name='not_same', check=~Q(user=F('followed_user'))) ]
         verbose_name_plural = "User follows"
     
     def __str__(self):
