@@ -5,7 +5,9 @@
 
   <form action="{% url 'bookreview:new_review' ticket.id %}" method='post'>
     {% csrf_token %}
-    <p>Vous êtes en train de poster en réponse à {{ ticket.title }} de {{ ticket.user.username }}</p>
+    <p>Vous êtes en train de poster en réponse à</p>
+    {% include 'bookreview/partials/ticket_snippet.html' with post=ticket page="new_review" %}
+    <h2>Critique</h2>
     {{ form.as_div }}
     <button type='submit'>Envoyer</button>
   </form>

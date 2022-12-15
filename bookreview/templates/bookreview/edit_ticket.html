@@ -6,6 +6,9 @@
   <form action="{% url 'bookreview:edit_ticket' ticket.id %}" method='post' enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_div }}
+    {% if ticket.image.name %}
+      <img src="{{ ticket.image.url }}" alt="">
+    {% endif %} 
     <button type='submit'>Enregistrer</button>
   </form>
   <form action="{% url 'bookreview:posts' %}">

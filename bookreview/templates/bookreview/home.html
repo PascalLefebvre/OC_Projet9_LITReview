@@ -2,14 +2,12 @@
 {% load bookreview_extras %}
 {% block content %}
 
-  <h1>Bienvenue {{ user.username }}</h1>
-
   <a href="{% url 'bookreview:new_ticket' %}">Demander une critique</a>
   <a href="{% url 'bookreview:new_review_one_step' %}">Créer une critique</a>
 
   {% for post in page_posts %}
     {% if post.content_type == 'TICKET' %}
-      {% include 'bookreview/partials/ticket_snippet.html' %}
+      {% include 'bookreview/partials/ticket_snippet.html' with page="home" %}
       {% if not post|already_reviewed:user %}
         <a href="{% url 'bookreview:new_review' post.id %}">Créer une critique</a>
       {% endif %}

@@ -2,6 +2,9 @@
 
 {% block content %}
   <h1>Modifier votre critique</h1>
+  <h2>Vous êtes en train de poster en réponse à</h2>
+  {% include 'bookreview/partials/ticket_snippet.html' with post=review.ticket page="edit_review" %}
+  <h2>Critique</h2>
 
   <form action="{% url 'bookreview:edit_review' review.id %}" method='post'>
     {% csrf_token %}

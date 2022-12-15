@@ -1,8 +1,16 @@
 {% load bookreview_extras %}
-<hr />
-<p>{% get_poster_display post.user %} demandé une critique</p>
-<p>{{ post.time_created }}</p>
+{% if post.user == user %}
+  {% if page == "posts" %}
+    <p><strong>Vous avez publié un ticket</strong></p>
+  {% else %}
+    <p><strong>Vous avez demandé une critique</strong></p>
+  {% endif %}
+{% else %}
+  <p><strong>{{ post.user }} a demandé une critique</strong></p>
+{% endif %}
+<p>{{ post.time_created|date:"H:i, d F Y" }}</p>
 <p>{{ post.title }}</p>
+<p>{{ post.description|truncatechars:100 }}</p>
 {% if post.image.name %}
   <img src="{{ post.image.url }}" alt="">
 {% endif %}

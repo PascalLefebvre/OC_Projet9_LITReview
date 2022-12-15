@@ -2,10 +2,12 @@
 
 {% block content %}
   <h1>Créer une critique (et son ticket)</h1>
+  <h2>Livre / Article</h2>
 
   <form action="{% url 'bookreview:new_review_one_step' %}" method='post'>
     {% csrf_token %}
     {{ ticket_form.as_div }}
+    <h2>Critique</h2>
     {{ review_form.as_div }}
     <button type='submit'>Envoyer</button>
   </form>

@@ -14,7 +14,10 @@
     {{ form.as_div }}
     <button type="submit" >Se connecter</button>
   </form>
-  <p><strong>Pas de compte</strong></p>
-  <a href="{% url 'accounts:register' %}">Inscrivez-vous maintenant</a>
+  <p><strong>Inscrivez-vous maintenant</strong></p>
+  <form action="{% url 'accounts:register' %}">
+    {% csrf_token %}
+    <button type="submit">S'inscrire</button>
+  </form>
 
 {% endblock content %}

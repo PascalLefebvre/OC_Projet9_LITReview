@@ -6,7 +6,7 @@
 
   {% for post in page_posts %}
     {% if post.content_type == 'TICKET' %}
-      {% include 'bookreview/partials/ticket_snippet.html' %}
+      {% include 'bookreview/partials/ticket_snippet.html' with page="posts" %}
       <a href="{% url 'bookreview:edit_ticket' post.id %}">Modifier le ticket</a>
       <a href="{% url 'bookreview:delete_ticket' post.id %}">Supprimer le ticket</a>
     {% elif post.content_type == 'REVIEW' %}
