@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.db import IntegrityError
+from django.core.paginator import Paginator
 
 
 from itertools import chain
@@ -36,7 +37,13 @@ def home(request):
 
     # combine and sort the two types of posts
     posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
-    return render(request, 'bookreview/home.html', context={'posts': posts})
+
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    context = {'page_posts': page_posts}
+
+    return render(request, 'bookreview/home.html', context)
 
 
 @login_required
@@ -183,7 +190,11 @@ def posts(request):
 
     # combine and sort the two types of posts
     posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
-    return render(request, 'bookreview/posts.html', context={'posts': posts})
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    context = {'page_posts': page_posts}
+    return render(request, 'bookreview/posts.html', context)
 
 
 @login_required

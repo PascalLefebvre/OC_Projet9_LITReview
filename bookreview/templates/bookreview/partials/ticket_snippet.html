@@ -6,6 +6,3 @@
 {% if post.image.name %}
   <img src="{{ post.image.url }}" alt="">
 {% endif %}
-{% comment %} {% if not post|already_reviewed:user %}
-  <a href="{% url 'bookreview:new_review' post.id %}">Créer une critique</a>
-{% endif %} {% endcomment %}

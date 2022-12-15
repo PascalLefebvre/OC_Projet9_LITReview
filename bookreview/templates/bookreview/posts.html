@@ -4,7 +4,7 @@
 
   <h1>Vos posts</h1>
 
-  {% for post in posts %}
+  {% for post in page_posts %}
     {% if post.content_type == 'TICKET' %}
       {% include 'bookreview/partials/ticket_snippet.html' %}
       <a href="{% url 'bookreview:edit_ticket' post.id %}">Modifier le ticket</a>
@@ -16,5 +16,7 @@
       <p>en réponse à : "{{ post.ticket.title }}" de "{{ post.ticket.user.username }}"</p>
     {% endif %}
   {% endfor %}
+
+  {% include 'bookreview/partials/paging_snippet.html' %}
   
 {% endblock content %}

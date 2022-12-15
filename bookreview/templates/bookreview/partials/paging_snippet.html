@@ -1,0 +1,16 @@
+<span>
+  {% if page_posts.has_previous %}
+    <a href="?page=1">« Première</a>
+    <a href="?page={{ page_posts.previous_page_number }}">Précédente</a>
+  {% endif %}
+
+  <span>
+    Page {{ page_posts.number }} sur {{ page_posts.paginator.num_pages }}.
+
+  </span>
+  {% if page_posts.has_next %}
+    <a href="?page={{ page_posts.next_page_number }}">Suivante</a>
+    
+    <a href="?page={{ page_posts.paginator.num_pages }}">Dernière »</a>
+  {% endif %}
+</span>
