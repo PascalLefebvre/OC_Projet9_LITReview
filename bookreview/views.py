@@ -45,7 +45,7 @@ def new_ticket(request):
     if request.method != 'POST':
         form = TicketForm()
     else:
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
             new_ticket = form.save(commit=False)
             new_ticket.user = request.user
@@ -66,7 +66,7 @@ def edit_ticket(request, ticket_id):
     if request.method != 'POST':
         form = TicketForm(instance=ticket)
     else:
-        form = TicketForm(request.POST, instance=ticket)
+        form = TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             form.save()
             return redirect('bookreview:posts')

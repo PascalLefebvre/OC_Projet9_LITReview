@@ -9,19 +9,12 @@
 
   {% for post in posts %}
     {% if post.content_type == 'TICKET' %}
-      {% comment %} {% include 'ticket_snippet.html' %} {% endcomment %}
-      <hr />
-      <p>Ticket du {{ post.time_created }} par {{ post.user.username }}</p>
-      <p>{{ post.title }}</p>
+      {% include 'bookreview/partials/ticket_snippet.html' %}
       {% if not post|already_reviewed:user %}
         <a href="{% url 'bookreview:new_review' post.id %}">Créer une critique</a>
       {% endif %}
     {% elif post.content_type == 'REVIEW' %}
-      {% comment %} {% include 'review_snippet.html' %} {% endcomment %}
-      <hr />
-      <p>Critique du {{ post.time_created }} par {{ post.user.username }}</p>
-      <p>{{ post.headline }} - {{ post.rating }} / 5</p>
-      <p>en réponse à : "{{ post.ticket.title }}" de "{{ post.ticket.user.username }}"</p>
+      {% include 'bookreview/partials/review_snippet.html' %}
     {% endif %}
   {% endfor %}
   

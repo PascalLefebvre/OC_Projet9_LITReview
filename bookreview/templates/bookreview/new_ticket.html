@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Créer un ticket</h1>
 
-  <form action="{% url 'bookreview:new_ticket' %}" method='post'>
+  <form action="{% url 'bookreview:new_ticket' %}" method='post' enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_div }}
     <button type='submit'>Envoyer</button>

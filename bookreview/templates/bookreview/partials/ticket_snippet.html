@@ -1,0 +1,11 @@
+{% load bookreview_extras %}
+<hr />
+<p>{% get_poster_display post.user %} demandé une critique</p>
+<p>{{ post.time_created }}</p>
+<p>{{ post.title }}</p>
+{% if post.image.name %}
+  <img src="{{ post.image.url }}" alt="">
+{% endif %}
+{% comment %} {% if not post|already_reviewed:user %}
+  <a href="{% url 'bookreview:new_review' post.id %}">Créer une critique</a>
+{% endif %} {% endcomment %}

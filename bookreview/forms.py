@@ -1,6 +1,11 @@
 from django import forms
+from django.core.validators import RegexValidator
 
 from .models import Ticket, Review
+
+
+alphanumeric_plus = RegexValidator(r'^[0-9a-zA-Z_@+.-]*$', 'Seuls les caractères alphanumériques (sans accent) \
+                                                            et "_ @ + . -" sont autorisés.')
 
 
 class TicketForm(forms.ModelForm):
@@ -16,4 +21,4 @@ class ReviewForm(forms.ModelForm):
 
 
 class SubscriptionsForm(forms.Form):
-    username = forms.CharField(max_length=150)
+    username = forms.CharField(max_length=150, validators=[alphanumeric_plus])

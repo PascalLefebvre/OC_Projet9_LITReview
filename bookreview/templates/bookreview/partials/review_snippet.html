@@ -1,0 +1,6 @@
+{% load bookreview_extras %}
+<hr />
+<p>Critique du {{ post.time_created }} par {% get_poster_display post.user %}</p>
+<p>{{ post.headline }} - {{ post.rating }} / 5</p>
+<p>en réponse à : "{{ post.ticket.title }}" de "{% get_poster_display post.ticket.user %}"</p>
+{% comment %} ★ {% endcomment %}
