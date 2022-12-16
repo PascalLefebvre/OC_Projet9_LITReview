@@ -1,32 +1,50 @@
 {% load static %}
 
-<html>
-  <head>
-    <title>LITReview</title>
-       <link rel="stylesheet" href="{% static 'bookreview/style.css' %}" />
-  </head>
-  <body>
-    <header>
-      <h1>LITReview</h1>
-      {% if user.is_authenticated %}
-        <nav>
-          <ul>
-            <li><a href="{% url 'bookreview:home' %}">Flux</a></li>
-            <li><a href="{% url 'bookreview:posts' %}">Posts</a></li>
-            <li><a href="{% url 'bookreview:subscriptions' %}">Abonnements</a></li>
-            <li>
-              <form action="{% url 'accounts:logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Se déconnecter</button>
-              </form>
-            </li>
-          </ul>
-        </nav>
-      {% endif %}
-    </header> 
-      <div id="page_block">
-        {% block content %}
-        {% endblock content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% bootstrap_messages %}
+  <title>LITReview</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  {% comment %} <link rel="stylesheet" href="{% static 'bookreview/style.css' %}" /> {% endcomment %}
+</head>
+<body>
+  <header>
+    {% comment %} <h2 class="fw-bold"><span class="bi bi-star"></span><span class="bi bi-star-fill"></span></h2> {% endcomment %}
+    <nav class="navbar bg-light navbar-light fixed-top">
+      <div class="container bg-light">
+        <a class="navbar-brand mx-auto fw-bold" href="{% url 'bookreview:home' %}">LITReview</a>
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item active p-2">
+              <a class="nav-link" href="{% url 'bookreview:home' %}">Flux</a>
+          </li>
+          <li class="nav-item p-2">
+              <a class="nav-link" href="{% url 'bookreview:posts' %}">Posts</a>
+          </li>
+          <li class="nav-item p-2">
+              <a class="nav-link" href="{% url 'bookreview:subscriptions' %}">Abonnements</a>
+          </li>
+          <li class="nav-item p-2">
+              <a class="nav-link " href="{% url 'accounts:logout' %}">Se déconnecter</a>
+          </li>
+        </ul>
+        {% endif %}
       </div>
-  </body>
+    </nav>
+  </header>
+  {% block content %}
+  {% endblock content %}
+  <footer class="border-top">
+    <!-- Bootstrap JS bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </footer>
+</body>
 </html>

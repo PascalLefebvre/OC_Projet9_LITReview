@@ -1,16 +1,32 @@
 {% load bookreview_extras %}
-{% if post.user == user %}
-  {% if page == "posts" %}
-    <p><strong>Vous avez publié un ticket</strong></p>
+
+<div class="card">
+  <div class="card-body">
+  {% if post.user == user %}
+    {% if page == "posts" %}
+    <h5 class="card-subtitle">Vous avez publié un ticket</h5>
+    {% else %}
+    <h6 class="card-subtitle">Vous avez demandé une critique</h6>
+    {% endif %}
   {% else %}
-    <p><strong>Vous avez demandé une critique</strong></p>
+    <h5 class="card-subtitle">{{ post.user }} a demandé une critique</h5>
   {% endif %}
-{% else %}
-  <p><strong>{{ post.user }} a demandé une critique</strong></p>
-{% endif %}
-<p>{{ post.time_created|date:"H:i, d F Y" }}</p>
-<p>{{ post.title }}</p>
-<p>{{ post.description|truncatechars:100 }}</p>
-{% if post.image.name %}
-  <img src="{{ post.image.url }}" alt="">
-{% endif %}
+    <div class="row">
+      <div class="offset-8 col-4">
+        <p class>{{ post.time_created|date:"H:i, d F Y" }}</p>
+      </div>
+    </div>    
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.description|truncatechars:100 }}</p>
+  </div>
+  {% if post.image.name %}
+  <div class="row">
+    <div class="col-1 ps-5">
+      <img src="{{ post.image.url }}" alt="">
+    </div>
+  </div>
+  {% endif %}
+  {% if not post|already_reviewed:user %}
+  <a href="{% url 'bookreview:new_review' post.id %}" class="btn btn-secondary">Créer une critique</a>
+  {% endif %}
+</div>

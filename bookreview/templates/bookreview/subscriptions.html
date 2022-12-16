@@ -2,26 +2,38 @@
 
 {% block content %}
 
-  <h1>Suivre d'autres utilisateurs</h1>
-  <h2>{{ message }}</h2>
-  <form href="{% url 'bookreview:subscriptions' %}" method="post">
-    {% csrf_token %}
-    {{ subscription_form.as_div }}
-    <button type="submit">Envoyer</button>
-  </form>
+  <section class="py-5">
+    <div class="container">
+      <h2>Suivre d'autres utilisateurs</h2>
+      <h3>{{ message }}</h3>
+      <form class="text-center" href="{% url 'bookreview:subscriptions' %}" method="post">
+        {% csrf_token %}
+        {{ subscription_form.as_div }}
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+  </section>
 
-  <h1>Abonnements</h1>
-  {% for followed_user in followed_users %}
-    <form action="{% url 'bookreview:unsubscribe_user' followed_user.id %}" method="post">
-      {% csrf_token %}
-      <p>{{ followed_user }}</p>
-      <button type="submit">Désabonner</button>
-    </form>
-  {% endfor %}
+  <section class="py-5">
+    <div class="container">
+      <h2>Abonnements</h2>
+      {% for followed_user in followed_users %}
+        <form action="{% url 'bookreview:unsubscribe_user' followed_user.id %}" method="post">
+          {% csrf_token %}
+          <p>{{ followed_user }}</p>
+          <button type="submit">Désabonner</button>
+        </form>
+      {% endfor %}
+    </div>
+  </section>
 
-  <h1>Abonnés</h1>
-  {% for subscriber in user_subscribers %}
-    <p>{{ subscriber }}</p>
-  {% endfor %}
+  <section class="py-5">
+    <div class="container">
+      <h2>Abonnés</h2>
+      {% for subscriber in user_subscribers %}
+        <p>{{ subscriber }}</p>
+      {% endfor %}
+    </div>
+  </section>
 
 {% endblock content %}

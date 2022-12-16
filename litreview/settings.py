@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     # My apps
     "bookreview",
     "accounts",
+    # Bootstrap app
+    "bootstrap5",
     # Default Django apps
     "django.contrib.admin",
     "django.contrib.auth",
