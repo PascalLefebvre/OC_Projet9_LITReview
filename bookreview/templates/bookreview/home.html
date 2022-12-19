@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% load bookreview_extras %}
+
 {% block content %}
 
 <section class="mt-5 py-5">
   <div class="container">
     <div class="row">
-      <div class="col">
-        <a href="{% url 'bookreview:new_ticket' %}" class="btn btn-secondary">Demander une critique</a>
+      <div class="col text-center">
+        <a href="{% url 'bookreview:new_ticket' %}" class="btn btn-secondary px-5">Demander une critique</a>
       </div>
-      <div class="col">
-        <a href="{% url 'bookreview:new_review_one_step' %}" class="btn btn-secondary">Créer une critique</a>
+      <div class="col text-center">
+        <a href="{% url 'bookreview:new_review_one_step' %}" class="btn btn-secondary px-5">Créer une critique</a>
       </div>
     </div>
   </div>
@@ -18,16 +19,20 @@
 <div class="container">
 {% for post in page_posts %}
   {% if post.content_type == 'TICKET' %}
-    {% include 'bookreview/partials/ticket_snippet.html' %}
-    {% if not post|already_reviewed:user %}
-    <a href="{% url 'bookreview:new_review' post.id %}">Créer une critique</a>
-    {% endif %}
+    {% include 'bookreview/partials/ticket_snippet.html' with ticket_in_review="False" page="home" %}
   {% elif post.content_type == 'REVIEW' %}
-    {% include 'bookreview/partials/review_snippet.html' %}
+  <div class="card mx-5 mb-3">
+    <div class="card-body">
+      {% include 'bookreview/partials/review_snippet.html' %}
+      <div class="row mt-3 me-5">
+        {% include 'bookreview/partials/ticket_snippet.html' with post=post.ticket ticket_in_review="True" page="home" %}
+      </div>
+    </div>
+  </div>
   {% endif %}
 {% endfor %}
-
 {% include 'bookreview/partials/paging_snippet.html' %}
 </div>
   
 {% endblock content %}
+
