@@ -1,60 +1,9 @@
-/* MAIN ELEMENTS OF THE PAGE */
-/* body, #page_block, section, nav, etc. */
-
-body {
-    width: 100%;
-    margin: auto;
+.my-desc {
+    height: 50px;
+    overflow-y: scroll;
 }
 
-#page_block {
-    position: absolute;
-    top: 120px;
-}
-
-h1 {
-    text-align: center;
-    margin-left: 20px;
-    scroll-margin-top: 120px;
-}
-
-
-/* Header */
-
-header {
-    background-color: rgb(139, 139, 146);
-    color: white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.my-body {
     height: 100px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    z-index: 1;
-}
-
-/* Navigation */
-
-nav {
-    padding-right: 25%;
-    display: flex;
-    align-items: center;
-    padding-left: 0px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    padding-right: 40px;
-}
-
-nav a:hover {
-    color: black;
-}
-
-/* OTHERS ELEMENTS */
-
-ul {
-    list-style: none;
+    overflow-y: scroll;
 }

@@ -1,40 +1,36 @@
 {% load bookreview_extras %}
 
-<div class="card mx-5 mb-3">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-8">
-      {% if ticket_in_review == "False" %}
-        {% if post.user == user %}
-          {% if page == "home" %}
-          <h6 class="card-subtitle">Vous avez demandé une critique</h6>
-          {% elif page == "posts" %}
-          <h6 class="card-subtitle">Vous avez publié un ticket</h6>
-          {% endif %}
-        {% else %}
-          <h6 class="card-subtitle">{{ post.user }} a demandé une critique</h6>
-        {% endif %}
-      {% elif ticket_in_review == "True" %}
-        <h6>Ticket - {% get_poster_display post.user %}<h6>
+<div class="row">
+  <div class="col-8">
+  {% if ticket_in_review == "False" %}
+    {% if post.user == user %}
+      {% if page == "home" %}
+      <h6 class="card-subtitle">Vous avez demandé une critique</h6>
+      {% elif page == "posts" %}
+      <h6 class="card-subtitle">Vous avez publié un ticket</h6>
       {% endif %}
-      <h5 class="card-title my-3">{{ post.title }}</h5>
-      <p class="card-text">{{ post.description|truncatechars:100 }}</p>
-      {% if post.image.name %}
-      <img src="{{ post.image.url }}" alt="">
-      {% endif %}
-      </div>
-      <div class="col-4 text-end">
-      {% if ticket_in_review == "False" %}
-        <p class="mt-2">{{ post.time_created|date:"H:i, d F Y" }}</p>
-        {% if not post|already_reviewed:user and page == "home" %}
-        <a href="{% url 'bookreview:new_review' post.id %}" class="btn btn-secondary mt-5">Créer une critique</a>
-        {% endif %}
-      {% elif ticket_in_review == "True" %}
-        {% if page != "home" and page != "posts" %}
-        <p class="mt-2">{{ post.time_created|date:"H:i, d F Y" }}</p>
-        {% endif %}
-      {% endif %}
-      </div>
-    </div>
+    {% else %}
+      <h6 class="card-subtitle">{{ post.user }} a demandé une critique</h6>
+    {% endif %}
+  {% elif ticket_in_review == "True" %}
+    <h6>Ticket - {% get_post_author post.user %}<h6>
+  {% endif %}
+  <h5 class="card-title my-3">{{ post.title }}</h5>
+  <p class="card-text my-desc">{{ post.description }}</p>
+  {% if post.image.name %}
+  <img src="{{ post.image.url }}" alt="">
+  {% endif %}
+  </div>
+  <div class="col-4 text-end">
+  {% if ticket_in_review == "False" %}
+    <p class="mt-2">{{ post.time_created|date:"H:i, d F Y" }}</p>
+    {% if not post|already_reviewed:user and page == "home" %}
+    <a href="{% url 'bookreview:new_review' post.id %}" class="btn btn-secondary mt-5">Créer une critique</a>
+    {% endif %}
+  {% elif ticket_in_review == "True" %}
+    {% if page != "home" and page != "posts" %}
+    <p class="mt-2">{{ post.time_created|date:"H:i, d F Y" }}</p>
+    {% endif %}
+  {% endif %}
   </div>
 </div>

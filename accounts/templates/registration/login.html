@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<div class="container">
   <h2>Connectez-vous</h2>
   {% if form.errors %}
     <p>Votre nom d'utilisateur et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
@@ -19,5 +20,6 @@
     {% csrf_token %}
     <button type="submit">S'inscrire</button>
   </form>
+</div>
 
 {% endblock content %}

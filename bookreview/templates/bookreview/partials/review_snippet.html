@@ -7,8 +7,8 @@
   {% else %}
     <h6>{{ post.user }} a publié une critique</h6>
   {% endif %}
-    <h5 class="card-title my-3">{{ post.headline }} - {{ post.rating }} / 5</h5>
-    <p class="card-text">{{ post.body|truncatechars:100 }}</p>
+    <h5 class="card-title my-3">{{ post.headline }} - {{ post.rating|display_stars_rating }}</h5>
+    <p class="card-text my-body">{{ post.body }}</p>
   </div>
   <div class="col-4 text-end mt-2">
     <p>{{ post.time_created|date:"H:i, d F Y" }}</p>
