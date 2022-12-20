@@ -2,38 +2,46 @@
 
 {% block content %}
 
-  <section class="py-5">
-    <div class="container">
-      <h2>Suivre d'autres utilisateurs</h2>
-      <h3>{{ message }}</h3>
-      <form class="text-center" href="{% url 'bookreview:subscriptions' %}" method="post">
-        {% csrf_token %}
-        {{ subscription_form.as_div }}
-        <button type="submit">Envoyer</button>
-      </form>
+<div class="row text-center">
+  <h3>Suivre d'autres utilisateurs</h3>
+  <form action="{% url 'bookreview:subscriptions' %}" method="post">
+    {% csrf_token %}
+    <div class="row my-3">
+      <div class="col-10 text-center">
+        {{ subscription_form }}
+      </div>
+      <div class="col-2 text-end">
+        <button type="submit" class="btn btn-secondary px-3">Envoyer</button>
+      </div>
     </div>
-  </section>
+  </form>
+  <h5>{{ message }}</h5>
+</div>
 
-  <section class="py-5">
-    <div class="container">
-      <h2>Abonnements</h2>
-      {% for followed_user in followed_users %}
-        <form action="{% url 'bookreview:unsubscribe_user' followed_user.id %}" method="post">
-          {% csrf_token %}
-          <p>{{ followed_user }}</p>
-          <button type="submit">Désabonner</button>
-        </form>
-      {% endfor %}
+<div class="row mt-4">
+  <h3 class="text-center mb-4">Abonnements</h3>
+  {% for followed_user in followed_users %}
+  <form action="{% url 'bookreview:unsubscribe_user' followed_user.id %}" method="post">
+    {% csrf_token %}
+    <div class="row border">
+      <div class="col-10 pt-2">
+        <h5>{{ followed_user }}</h5>
+      </div>
+      <div class="col-2 text-end">
+        <button type="submit" class="btn btn-light px-3">Désabonner</button>
+      </div>
     </div>
-  </section>
+  </form>
+  {% endfor %}
+</div>
 
-  <section class="py-5">
-    <div class="container">
-      <h2>Abonnés</h2>
-      {% for subscriber in user_subscribers %}
-        <p>{{ subscriber }}</p>
-      {% endfor %}
-    </div>
-  </section>
+<div class="row my-5">
+  <h3 class="text-center mb-4">Abonnés</h3>
+  {% for subscriber in user_subscribers %}
+  <div class="row border">
+    <h5 class="pt-2">{{ subscriber }}</h5>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock content %}

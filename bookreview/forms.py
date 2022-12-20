@@ -24,12 +24,12 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['headline', 'rating', 'body']
         labels = {'headline': 'Titre', 'rating': 'Note', 'body': 'Commentaire'}
-        widgets = {'headline': forms.TextInput(attrs={'size': '80'}),
+        widgets = {'headline': forms.TextInput(attrs={'size': 80}),
                    'body': forms.Textarea(attrs={'cols': 80, 'rows': 8}),
                    }
 
 
 class SubscriptionsForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': "Nom d'utilisateur"}),
+    username = forms.CharField(widget=forms.TextInput(attrs={'size': 80, 'placeholder': "Nom d'utilisateur"}),
                                max_length=150, validators=[alphanumeric_plus])
     username.label = ''
