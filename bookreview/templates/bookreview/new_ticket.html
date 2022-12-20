@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Créer un ticket</h1>
 
-  <form action="{% url 'bookreview:new_ticket' %}" method='post' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button type='submit'>Envoyer</button>
-  </form>
-  <form action="{% url 'bookreview:home' %}">
-    {% csrf_token %}
-    <button type='submit'>Annuler</button>
-  </form>
+<div class="row">
+  <div class="offset-2 col-8">
+    <h3 class="text-center">Créer un ticket</h3>
+    <form action="{% url 'bookreview:new_ticket' %}" method='post' enctype="multipart/form-data">
+      {% include 'bookreview/partials/form_ticket_snippet.html' %}
+      <div class="text-end">
+        <button type='submit' class="btn btn-secondary px-5">Envoyer</button>
+        <a href="{% url 'bookreview:home' %}" class="btn btn-secondary px-5">Annuler</a>
+      </div>
+    </form>
+  </div>
+</div>
 
 {% endblock content %}

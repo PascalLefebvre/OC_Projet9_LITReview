@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Créer une critique (et son ticket)</h1>
-  <h2>Livre / Article</h2>
 
-  <form action="{% url 'bookreview:new_review_one_step' %}" method='post'>
-    {% csrf_token %}
-    {{ ticket_form.as_div }}
-    <h2>Critique</h2>
-    {{ review_form.as_div }}
-    <button type='submit'>Envoyer</button>
-  </form>
-  <form action="{% url 'bookreview:home' %}">
-    {% csrf_token %}
-    <button type='submit'>Annuler</button>
-  </form>
+<div class="row">
+  <div class="offset-2 col-8">
+    <h3 class="text-center">Créer une critique</h3>
+    <div class="row border">
+      <h4 class="mt-2">Livre / Article</h4>
+      <form action="{% url 'bookreview:new_review_one_step' %}" method='post' enctype="multipart/form-data">
+        {% include 'bookreview/partials/form_ticket_snippet.html' with form=ticket_form %}
+        <h4 class="mt-2 pt-2 border-top">Critique</h4>
+        {% include 'bookreview/partials/form_review_snippet.html' with form=review_form %}
+        <div class="text-end mb-3">
+          <button type='submit' class="btn btn-secondary px-5">Envoyer</button>
+          <a href="{% url 'bookreview:home' %}" class="btn btn-secondary px-5">Annuler</a>
+        </div>
+      </form>
+     </div>
+  </div>
+</div>
 
 {% endblock content %}

@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<div class="container">
+  <div class="row">
     <h2>Inscrivez-vous</h2>
     {% if form.errors %}
         {{ form.errors }}
@@ -18,3 +20,5 @@
     </form>
 
 {% endblock content %}
+
+<a href="{% url 'accounts:register' %}" class="btn btn-secondary px-5">S'inscrire</a>

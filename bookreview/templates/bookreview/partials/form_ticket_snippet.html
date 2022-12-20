@@ -1,0 +1,7 @@
+{% csrf_token %}
+{% for field in form %}
+<div>
+<p class="text-start">{{ field.label }}</p>
+<p class>{{ field }}</p>
+</div>
+{% endfor %}

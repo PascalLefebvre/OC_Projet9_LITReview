@@ -13,13 +13,20 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         fields = ['title', 'description', 'image']
         labels = {'title': 'Titre'}
-        widgets = {'description': forms.Textarea(attrs={'cols': 80})}
+        widgets = {'title': forms.TextInput(attrs={'size': '80'}),
+                   'description': forms.Textarea(attrs={'cols': 80, 'rows': 8}),
+                #    'image': forms.FileInput(attrs={'id': 'Télécharger le fichier'}),
+                #    'image': forms.FileInput(attrs={'class': 'btn-secondary'}),
+                   }
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['headline', 'rating', 'body']
         labels = {'headline': 'Titre', 'rating': 'Note', 'body': 'Commentaire'}
+        widgets = {'headline': forms.TextInput(attrs={'size': '80'}),
+                   'body': forms.Textarea(attrs={'cols': 80, 'rows': 8}),
+                   }
 
 
 class SubscriptionsForm(forms.Form):

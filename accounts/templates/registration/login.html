@@ -3,23 +3,31 @@
 {% block content %}
 
 <div class="container">
-  <h2>Connectez-vous</h2>
-  {% if form.errors %}
-    <p>Votre nom d'utilisateur et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
-  {% endif %}
+  <div class="row">
+    <div class="col-6 text-center">
+      <h3>Inscrivez-vous maintenant<h3>
+      <a href="{% url 'accounts:register' %}" class="btn btn-secondary px-5">S'inscrire</a>
+    </div>
+    <div class="col-6 text-center">
+      <h3 class="mb-5">Connectez-vous</h3>
+      <form action="{% url 'accounts:login' %}" method="post">
+        {% csrf_token %}
+        {% comment %} {{ form.as_div }} {% endcomment %}
+        {% for field in form %}
+        <div>
+          <p>{{ field }}</p>
+          <p>{{ field.field.widget.attrs.placeholder }}</p>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-secondary px-5">Se connecter</button>
+      </form>
 
+      {% if form.errors %}
+      <p class="mt-3 fw-bold">Votre nom d'utilisateur et votre mot de passe ne correspondent pas.<br>Veuillez réessayer.</p>
+      {% endif %}
+    </div>
+  </div>
   {% comment %} <p>{{ message }}</p> {% endcomment %}
-
-  <form action="{% url 'accounts:login' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button type="submit" >Se connecter</button>
-  </form>
-  <p><strong>Inscrivez-vous maintenant</strong></p>
-  <form action="{% url 'accounts:register' %}">
-    {% csrf_token %}
-    <button type="submit">S'inscrire</button>
-  </form>
 </div>
 
 {% endblock content %}

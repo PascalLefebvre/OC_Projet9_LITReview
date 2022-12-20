@@ -1,16 +1,19 @@
-<span>
+<div class="row text-center my-3">
+  <div class="offset-2 col-2">
   {% if page_posts.has_previous %}
     <a href="?page=1">« Première</a>
     <a href="?page={{ page_posts.previous_page_number }}">Précédente</a>
   {% endif %}
+  </div>
 
-  <span>
+  <div class="col-4 text-center">
     Page {{ page_posts.number }} sur {{ page_posts.paginator.num_pages }}.
+  </div>
 
-  </span>
+  <div class="col-2">
   {% if page_posts.has_next %}
     <a href="?page={{ page_posts.next_page_number }}">Suivante</a>
     
     <a href="?page={{ page_posts.paginator.num_pages }}">Dernière »</a>
   {% endif %}
-</span>
+</div>

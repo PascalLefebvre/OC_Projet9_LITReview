@@ -1,19 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Modifier votre critique</h1>
-  <h2>Vous êtes en train de poster en réponse à</h2>
-  {% include 'bookreview/partials/ticket_snippet.html' with post=review.ticket page="edit_review" %}
-  <h2>Critique</h2>
 
-  <form action="{% url 'bookreview:edit_review' review.id %}" method='post'>
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button type='submit'>Enregistrer</button>
-  </form>
-  <form action="{% url 'bookreview:posts' %}">
-    {% csrf_token %}
-    <button type='submit'>Annuler</button>
-  </form>
+<div class="row">
+  <div class="offset-2 col-8">
+    <h3 class="text-center">Modifier votre critique</h3>
+    <div class="row border">
+      <h4 class="mt-2">Vous êtes en train de poster en réponse à</h4>
+      <form action="{% url 'bookreview:edit_review' review.id %}" method='post'>
+        <div class="row mt-3 me-5">
+          <div class="card mx-5 mb-3">
+            <div class="card-body">
+              {% include 'bookreview/partials/show_ticket_snippet.html' with post=review.ticket page="edit_review" ticket_in_review="True" %}
+            </div>
+          </div>
+        </div>
+        <h4 class="mt-2 pt-2 border-top">Critique</h4>
+        {% include 'bookreview/partials/form_review_snippet.html' %}
+        <div class="text-end mb-3">
+          <button type='submit' class="btn btn-secondary px-5">Envoyer</button>
+          <a href="{% url 'bookreview:posts' %}" class="btn btn-secondary px-5">Annuler</a>
+        </div>
+      </form>
+     </div>
+  </div>
+</div>
 
 {% endblock content %}
