@@ -8,7 +8,7 @@ app_name = "bookreview"
 
 urlpatterns = [
     # Home page.
-    path("", views.home, name="home"),
+    path("home", views.home, name="home"),
     # Page for viewing the user posts.
     path("posts/", views.posts, name="posts"),
     # Page for viewing the user subscriptions.

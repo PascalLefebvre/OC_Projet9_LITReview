@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-5 text-center">
+      <h3>Inscrivez-vous maintenant<h3>
+      <a href="{% url 'accounts:signup' %}" class="btn btn-secondary px-5 mt-3">S'inscrire</a>
+    </div>
+    <div class="col-7 text-center">
+      <h3 class="mb-5">Connectez-vous</h3>
+      <h5>{{ message }}</h5>
+      <form action="{% url 'accounts:login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary px-5">Se connecter</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
