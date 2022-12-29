@@ -25,6 +25,8 @@ class ReviewForm(forms.ModelForm):
         fields = ['headline', 'rating', 'body']
         labels = {'headline': 'Titre', 'rating': 'Note', 'body': 'Commentaire'}
         widgets = {'headline': forms.TextInput(attrs={'size': 80}),
+                   # 'rating': forms.RadioSelect(attrs={'class': 'form-check-inline'}),
+                   'rating': forms.RadioSelect(),
                    'body': forms.Textarea(attrs={'cols': 80, 'rows': 8}),
                    }
 

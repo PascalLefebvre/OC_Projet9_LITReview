@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Supprimer la critique</h1>
+  <h3>Supprimer la critique</h3>
 
   <p>Etes-vous sûr de vouloir supprimer la critique : {{ review.headline }} ?</p>
 
   <form action="" method="post">
     {% csrf_token %}
-    <button type='submit'>Oui</button>
-  </form>
-
-  <form action="{% url 'bookreview:posts' %}">
-    {% csrf_token %}
-    <button type='submit'>Non</button>
+    <div class="row">
+      <div class="col-6 text-end">
+          <button type="submit"class="btn btn-secondary px-5">Oui</button>
+      </div>
+      <div class="col-6 text-start">
+          <a href="{% url 'bookreview:posts' %}" class="btn btn-secondary px-5">Non</a>
+      </div>
+    </div>
   </form>
 
 {% endblock content %}

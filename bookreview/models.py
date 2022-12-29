@@ -2,6 +2,18 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
 from django.db.models import CheckConstraint, F, Q
+from PIL import Image
+
+
+RATING_CHOICES = (
+    (0, '- 0'),
+    (1, '- 1'),
+    (2, '- 2'),
+    (3, '- 3'),
+    (4, '- 4'),
+    (5, '- 5'),
+)
+
 
 
 class Ticket(models.Model):
@@ -11,6 +23,17 @@ class Ticket(models.Model):
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    
+    IMAGE_SIZE = (80, 160)
+
+    def resize_image(self):
+        image = Image.open(self.image)
+        image.resize(self.IMAGE_SIZE, Image.ANTIALIAS)
+        image.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        self.resize_image()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         """ Return a string representation of the model. """
@@ -20,7 +43,7 @@ class Ticket(models.Model):
 class Review(models.Model):
     """ A review in response to a ticket. """
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
-    rating = models.PositiveSmallIntegerField(
+    rating = models.PositiveSmallIntegerField(blank=False, default=3, choices=RATING_CHOICES,
         # validates that rating must be between 0 and 5
         validators=[MinValueValidator(0), MaxValueValidator(5)]
     )
