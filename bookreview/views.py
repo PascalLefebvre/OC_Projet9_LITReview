@@ -13,6 +13,7 @@ from .models import Ticket, Review, UserFollows
 from accounts.models import User
 from .forms import TicketForm, ReviewForm, SubscriptionsForm
 
+
 def get_followed_users(user):
     """ Get the users that the user follows. """
     followed_users = []
@@ -42,7 +43,6 @@ def home(request):
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
     context = {'page_posts': page_posts}
-
     return render(request, 'bookreview/home.html', context)
 
 
@@ -58,6 +58,7 @@ def new_ticket(request):
             new_ticket.user = request.user
             new_ticket.save()
             return redirect('bookreview:home')
+
     context = {'form': form}
     return render(request, 'bookreview/new_ticket.html', context)
 
@@ -136,7 +137,7 @@ def new_review_one_step(request):
             new_review.ticket = new_ticket
             new_review.user = request.user
             new_review.save()
-            return redirect('bookreview:home') 
+            return redirect('bookreview:home')
 
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'bookreview/new_review_one_step.html', context)
@@ -224,12 +225,12 @@ def subscriptions(request):
                 return redirect('bookreview:subscriptions')
             except User.DoesNotExist:
                 message = "Cet utilisateur n'existe pas."
-            except IntegrityError as e :
+            except IntegrityError as e:
                 if 'CHECK constraint' in str(e):
                     message = "Vous ne pouvez pas vous abonner à vous-même !"
                 if 'UNIQUE constraint' in str(e):
                     message = "Vous êtes déjà abonné à cet utilisateur !"
-    
+
     context = {'message': message, 'subscription_form': subscription_form,
                'followed_users': followed_users, 'user_subscribers': user_subscribers}
     return render(request, 'bookreview/subscriptions.html', context)

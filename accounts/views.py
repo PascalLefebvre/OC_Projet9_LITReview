@@ -24,9 +24,11 @@ def login_page(request):
     return render(
         request, 'accounts/login.html', context={'form': form, 'message': message})
 
+
 def logout_user(request):
     logout(request)
     return redirect('accounts:login')
+
 
 def signup(request):
     if request.method != 'POST':
@@ -37,6 +39,5 @@ def signup(request):
             user = form.save()
             login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
-
-    context={'form': form}
+    context = {'form': form}
     return render(request, 'accounts/signup.html', context)

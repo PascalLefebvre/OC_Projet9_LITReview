@@ -6,13 +6,13 @@
 ## Installation
 
 
-    - After cloning, change into the directory and type <code>python -m venv env</code>.
+    - After cloning, change into the directory and type 'python -m venv env'.
 
-    - Next, type <code>source env/bin/activate</code> to enter in your virtual environment (to deactivate, type <code>deactivate</code>).
+    - Next, type 'source env/bin/activate' to enter in your virtual environment (to deactivate, type 'deactivate').
 
-    - Type <code>pip install -r requirements.txt</code> to install all the necessary packages.
+    - Type 'pip install -r requirements.txt' to install all the necessary packages.
     
-    - To start the application, type <code>python manage.py runserver</code>. The app should respond with an address you should be able to go to using your browser (http://127.0.0.1:8000 by default).
+    - To start the application, type 'python manage.py runserver'. The app should respond with an address you should be able to go to using your browser (http://127.0.0.1:8000 by default).
 
 
 ## Testing
@@ -23,9 +23,9 @@
 ## Management of the applicaton from the Django admin interface
 
 
-    - From the app directory, type <code>python manage.py createsuperuser</code> to create a superuser to manage the database.
+    - From the app directory, type 'python manage.py createsuperuser' to create a superuser to manage the database.
     
     - To login to the Django admin site, open the /admin URL (e.g. http://127.0.0.1:8000/admin ) in your browser and enter your new superuser name and password. Then, you can access to the tables content.
     
-    - Below the database UML diagram.
+    - See the database UML diagram ("UML_BD_schema.pdf")
 

@@ -9,6 +9,7 @@ MAX_RATING = 5
 
 register = template.Library()
 
+
 @register.filter
 def already_reviewed(ticket, user):
     """ Check if the logged user has already responded to the ticket. """
@@ -16,6 +17,7 @@ def already_reviewed(ticket, user):
         return True
     else:
         return False
+
 
 @register.filter
 def display_stars_rating(rating):
@@ -26,6 +28,7 @@ def display_stars_rating(rating):
     for i in range(rating, MAX_RATING):
         string += '  ' + '<span class="bi bi-star fw-bold"></span>'
     return mark_safe(string)
+
 
 @register.simple_tag(takes_context=True)
 def get_post_author(context, user):

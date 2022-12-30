@@ -11,3 +11,12 @@
 ::placeholder {
     text-align: center; 
 }
+
+/* #id_rating {
+    display: flex;
+} */
+
+.rating {
+    display: inline-flex;
+    column-gap: 20px;
+}

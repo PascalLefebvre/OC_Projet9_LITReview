@@ -15,9 +15,8 @@ class TicketForm(forms.ModelForm):
         labels = {'title': 'Titre'}
         widgets = {'title': forms.TextInput(attrs={'size': '80'}),
                    'description': forms.Textarea(attrs={'cols': 80, 'rows': 8}),
-                #    'image': forms.FileInput(attrs={'id': 'Télécharger le fichier'}),
-                #    'image': forms.FileInput(attrs={'class': 'btn-secondary'}),
                    }
+
 
 class ReviewForm(forms.ModelForm):
     class Meta:
@@ -25,8 +24,7 @@ class ReviewForm(forms.ModelForm):
         fields = ['headline', 'rating', 'body']
         labels = {'headline': 'Titre', 'rating': 'Note', 'body': 'Commentaire'}
         widgets = {'headline': forms.TextInput(attrs={'size': 80}),
-                   # 'rating': forms.RadioSelect(attrs={'class': 'form-check-inline'}),
-                   'rating': forms.RadioSelect(),
+                   'rating': forms.RadioSelect(attrs={'class': 'rating'}),
                    'body': forms.Textarea(attrs={'cols': 80, 'rows': 8}),
                    }
 

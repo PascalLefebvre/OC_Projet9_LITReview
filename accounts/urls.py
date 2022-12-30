@@ -1,6 +1,6 @@
 """ Defines URL patterns for accounts. """
 
-from django.urls import path, include
+from django.urls import path
 
 from . import views
 
