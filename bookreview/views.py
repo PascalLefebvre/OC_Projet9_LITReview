@@ -127,7 +127,7 @@ def new_review_one_step(request):
         ticket_form = TicketForm()
         review_form = ReviewForm()
     else:
-        ticket_form = TicketForm(request.POST)
+        ticket_form = TicketForm(request.POST, request.FILES)
         review_form = ReviewForm(request.POST)
         if ticket_form.is_valid() and review_form.is_valid():
             new_ticket = ticket_form.save(commit=False)
