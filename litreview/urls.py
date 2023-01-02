@@ -21,7 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("accounts.urls")),
-    path("bookreview/", include("bookreview.urls")),
+    path("bookreview", include("bookreview.urls")),
 ]
 
 if settings.DEBUG:
